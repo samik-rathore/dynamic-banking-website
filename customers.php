@@ -1,5 +1,3 @@
-
-
 <html>
 <head>
 <style>
@@ -16,8 +14,8 @@
   padding: 8px;
 }
 
-#customers tr:nth-child(even){background-color: #802bb1;color:white}
-#customers tr:nth-child(odd){background-color:#4c495d;color:white}
+#customers tr:nth-child(even){background-color: #802bb1;color:white;}
+#customers tr:nth-child(odd){background-color:#4c495d;color:white;}
 
 #customers tr:hover {background-color: #d1d7e0;color:black;}
 
@@ -30,10 +28,7 @@
 }
 body{
 background-image:url("lp.jpg");
-
-
-
-  background-size: cover;}
+background-size: cover;}
 .menubar {
   overflow: hidden;
   background-color: #333;
@@ -67,10 +62,9 @@ text-decoration:none;color:white;}
 </head>
 <body>
 <div class="menubar">
-  <a href="#about">About</a>
-  <a href="#news">Contact</a>
+  <a href="tranfertable.php">Transfers</a>
   <a class="active">Customers</a>
-  <a href="homeyhome.html">Home</a>
+  <a href="index.html">Home</a>
 </div><br><br><br>
 <?php
 
@@ -94,8 +88,7 @@ if ($result->num_rows > 0) {
     // output data of each row
     while($row=$result->fetch_assoc()){
         echo "<tr><td>" . $row["id"]. "</td><td><a href=specific.php?id=$row[id]>". $row["firstname"]. " " . $row["lastname"]. "</a></td><td>".$row["money"]."</td></tr>";
-		
-    }
+		}
     echo "</table>";
 } else {
     echo "0 results";
