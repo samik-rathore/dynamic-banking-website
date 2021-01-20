@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <html>
 <head>
 <style>
@@ -14,8 +15,8 @@
   padding: 8px;
 }
 
-#customers tr:nth-child(even){background-color: #802bb1;color:white;}
-#customers tr:nth-child(odd){background-color:#4c495d;color:white;}
+#customers tr:nth-child(even){background-color: #802bb1;color:white}
+#customers tr:nth-child(odd){background-color:#4c495d;color:white}
 
 #customers tr:hover {background-color: #d1d7e0;color:black;}
 
@@ -58,6 +59,11 @@ text-decoration:none;color:white;}
   background-color: #802bb1;
   color: white;
 }
+#foot{
+    color:white;
+    text-align:center;
+    margin-top:155px;
+    }
 </style>
 </head>
 <body>
@@ -68,19 +74,22 @@ text-decoration:none;color:white;}
 </div><br><br><br>
 <?php
 
+
 $servername = "localhost";
-$username = "root";
-$password="";
-$dbname = "mydb";     
-session_start();
+$username = "id15941124_root";
+$password = "n5fzer%]9LOEbX2}";
+$database = "id15941124_mydb";
+
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $database);
+
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT id, firstname, lastname,money FROM MyGuests";
+
+$sql = "SELECT id, firstname, lastname,money FROM myguests";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -88,7 +97,8 @@ if ($result->num_rows > 0) {
     // output data of each row
     while($row=$result->fetch_assoc()){
         echo "<tr><td>" . $row["id"]. "</td><td><a href=specific.php?id=$row[id]>". $row["firstname"]. " " . $row["lastname"]. "</a></td><td>".$row["money"]."</td></tr>";
-		}
+		
+    }
     echo "</table>";
 } else {
     echo "0 results";
@@ -96,6 +106,9 @@ if ($result->num_rows > 0) {
 
 $conn->close();
 ?>
-
+<footer id="foot">
+  <p>Author: Samiksha Rathore<br>
+  GRIP January Internship</p>
+</footer>
 </body>
 </html>
