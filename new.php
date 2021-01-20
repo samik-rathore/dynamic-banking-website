@@ -13,14 +13,20 @@ background-image:url("lp.jpg");
   background-color: #333;
   color:white;
 }
-
-
+#foot{
+    color:white;
+    text-align:center;
+    margin-top:300px;
+    }
 </style>
 </head>
 <body>
 
-<h1 style="text-align:center;">Money Transferred Succesfully!!<br> Press <a href="homeyhome.html">here</a> to go back to home</h1>
-
+<h1 style="text-align:center;">Money Transferred Succesfully!!<br> Press <a href="index.html">here</a> to go back to home</h1>
+<footer id="foot">
+  <p>Author: Samiksha Rathore<br>
+  GRIP January Internship</p>
+</footer>
 </body>
 </html>
 
@@ -28,11 +34,11 @@ background-image:url("lp.jpg");
 
 <?php
 $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "mydb";
+$username = "id15941124_root";
+$password = "n5fzer%]9LOEbX2}";
+$database = "id15941124_mydb";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $database);
 // Check connection
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
@@ -60,10 +66,10 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
 	$amt=test_input($_POST["amt"]);
 }}
 function test_input($data){
-  $data=trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
+	$data=trim($data);
+	$data = stripslashes($data);
+	$data = htmlspecialchars($data);
+	return $data;
 }
 $frompieces=explode(" ",$transFrom);
 $topieces=explode(" ",$transTo);
@@ -71,24 +77,30 @@ $z=NULL;
 $x=NULL;
 $sql="SELECT firstname,lastname,money FROM myguests";
 $result=$conn->query($sql);
-while($row=$result->fetch_assoc())
-{ 
-if ($row["lastname"]==$topieces[1]) 
-{if ($row["firstname"]==$topieces[0]){
-$z=$row["money"]+$amt;
-}}
-if ($row["lastname"]==$frompieces[1]){if ($row["firstname"]==$frompieces[0]){
-$x=$row["money"]-$amt;}
-}}
+while($row=$result->fetch_assoc()){ 
+	if ($row["lastname"]==$topieces[1]) {
+		if ($row["firstname"]==$topieces[0]){
+			$z=$row["money"]+$amt;
+	}}
+	if ($row["lastname"]==$frompieces[1]){
+		if ($row["firstname"]==$frompieces[0]){
+			$x=$row["money"]-$amt;}
+	}}
 
-$sql="UPDATE myguests SET money=$z WHERE lastname='$topieces[1]';";
-$sql.="UPDATE myguests SET money=$x WHERE lastname='$frompieces[1]'";
-if ($conn->multi_query($sql) === TRUE) {
-
-} else{
+$sql="UPDATE myguests SET money=$z WHERE firstname='$topieces[0]'";
+if ($conn->query($sql) === TRUE) {} 
+else{
   echo "Error updating record: " . $conn->error;
 }
-
-
-
+$sql="UPDATE myguests SET money=$x WHERE firstname='$frompieces[0]'";
+if ($conn->query($sql) === TRUE) {} 
+else{
+  echo "Error updating record: " . $conn->error;
+}
+$sql="INSERT INTO Transfers (Transferred_from, Transferred_to, transfer_money)
+VALUES ('$transFrom', '$transTo', '$amt');";
+if ($conn->multi_query($sql) === TRUE) {} 
+else{
+  echo "Error updating record: " . $conn->error;
+}
 ?>
